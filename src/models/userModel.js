@@ -2,21 +2,11 @@
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
-// organization schema
-const organizationSchema = mongoose.Schema({
-    organizationName:{
-        type:String,
-        required:true
-    }
-
-},
-{ timestamp: true }
-)
-
-const authUserSchema = mongoose.Schema({
+const usersSchema = mongoose.Schema({
     role:{
         type:String,
         enum:['user','manager'],
+        required:true
     },
     email:{
         type:String,
@@ -32,10 +22,8 @@ const authUserSchema = mongoose.Schema({
 { timestamp: true }
 )
 
-
-
-// users static signup function
-authUserSchema.statics.signup = async ( email, password) => {
+// // users static signup function
+usersSchema.statics.newUser = async (role, email, password) => {
 
     const exists = await userDetailsModel.findOne({ email })
     if (exists) {
@@ -45,36 +33,14 @@ authUserSchema.statics.signup = async ( email, password) => {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const userSignup = await userDetailsModel.create({ email, password: hash })
+    const newUserDetails = await userDetailsModel.create({role, email, password: hash })
 
-    return userSignup
+    return newUserDetails
 }
 
 
-// users static login function
-authUserSchema.statics.login = async  (email, password) => {
-    // Check if user exists
-    const userLogin = await userDetailsModel.findOne({ email });
-    if (!userLogin) {
-        throw Error("Incorrect Email!");
-    }
-
-    // Compare password
-    const match = await bcrypt.compare(password, userLogin.password);
-    if (!match) {
-        throw Error("Incorrect password!");
-    }
-    return userLogin;
-};
-
-const adminDetailsModel  = new mongoose.model("adminDetails", authUserSchema)
-
-const userDetailsModel  = new mongoose.model("userDetails", authUserSchema)
-
-const organizationModel  = new mongoose.model("organizations", organizationSchema)
+const userDetailsModel  = new mongoose.model("userDetails", usersSchema)
 
 module.exports = {
-    adminDetailsModel,
-    userDetailsModel,
-    organizationModel
+userDetailsModel
 }

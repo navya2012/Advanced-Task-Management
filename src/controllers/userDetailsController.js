@@ -1,6 +1,5 @@
-
 const { check, validationResult } = require('express-validator');
-const { adminDetailsModel } = require('../models/userModel');
+const { adminDetailsModel } = require('../models/adminModel');
 const createToken = require('../utilities/token');
 
 

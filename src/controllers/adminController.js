@@ -1,4 +1,4 @@
-const { userDetailsModel, organizationModel } = require("../models/userModel");
+const {  organizationModel } = require("../models/adminModel");
 
 
 //all organizations
@@ -16,6 +16,12 @@ const getAllOrganizations = async(req,res) =>{
 const createOrganizations = async (req,res) => {
     const { organizationName } = req.body
     try{
+        const existingOrganization = await organizationModel.findOne({ organizationName });
+
+        if (existingOrganization) {
+          return res.status(400).json({ error: "Organization already exists" });
+        }
+        
         const organizationData = new organizationModel({organizationName})
         await organizationData.save()
 

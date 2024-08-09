@@ -4,11 +4,9 @@ const { tasksModel } = require("../models/tasksModel")
 // create tasks
 const createTasks = async (req,res) => {
     const { title, description, status, dueDate} = req.body
-    const manager_id = req.user._id
-    const organization_id = req.user.organization._id
 
     try{
-        const tasksFields ={ manager_id, title, description, status, dueDate, organization_id }
+        const tasksFields ={  title, description, status, dueDate }
         const tasksData = new tasksModel(tasksFields)
         await tasksData.save()
 
@@ -63,11 +61,9 @@ const updateTasks = async (req,res) => {
 // delete tasks
 const deleteTasks = async (req,res) => {
     const id = req.params.id
-    const manager_id = req.user._id
     try{
         const result = await tasksModel.findOneAndDelete({
-            _id: id,
-            manager_id:manager_id
+            _id: id
         });
 
         if (!result) {

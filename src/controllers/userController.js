@@ -15,7 +15,7 @@ const getAllTasks = async(req,res) =>{
 // status update
 const updateTaskStatus = async (req, res) => {
     const task_id = req.params.id
-    const user_id = req.user._id
+    // const user_id = req.user._id
     try {
 
         if (!task_id) {
@@ -27,7 +27,7 @@ const updateTaskStatus = async (req, res) => {
             {
                 $set: {
                     status:'completed',
-                    userId:user_id
+                    // userId:user_id
                 }
             },
             { new: true }
