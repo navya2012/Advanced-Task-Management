@@ -11,10 +11,10 @@ router.get('/user/all-tasks',   getAllTasks)
 router.patch('/user/update-tasks/:id', updateTaskStatus)
 
 //tasks
-router.post('/manager/create-tasks',  createTasks)
-router.get('/manager/tasks',   getTasks)
-router.delete('/manager/delete-tasks/:id', deleteTasks)
-router.patch('/manager/update-tasks/:id', updateTasks)
+router.post('/create-tasks',  createTasks)
+router.get('/tasks',   getTasks)
+router.delete('/delete-tasks/:id', deleteTasks)
+router.patch('/update-tasks/:id', updateTasks)
 
 
 module.exports = router

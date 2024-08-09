@@ -48,10 +48,10 @@ const updateTasks = async (req,res) => {
         );
 
         if (!updatedTasksData) {
-            return res.status(404).json({ error: "Job post not found" });
+            return res.status(404).json({ error: "task data not found" });
         }
 
-        res.status(200).json({ message: "Updated Job Post Successfully", updatedTasksData });
+        res.status(200).json({ message: "Updated task data Successfully", updatedTasksData });
     }
     catch(err){
         res.status(400).json({ error: err.message })

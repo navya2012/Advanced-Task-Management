@@ -5,7 +5,7 @@ const router = express.Router()
 const { signupValidation, userSignupDetails, userLoginDetails } = require("../controllers/userDetailsController")
 const {   adminMiddleware } = require("../middlewares/authMiddleware")
 const {  createOrganizations, getAllOrganizations } = require("../controllers/adminController")
-const { createUsers } = require("../controllers/adminUsersController")
+const { createUsers, getAllUsers } = require("../controllers/adminUsersController")
 
 
 
@@ -18,5 +18,6 @@ router.post('/admin/organizations',  adminMiddleware, createOrganizations )
 
 // admin users
 router.post('/admin/create-users',  adminMiddleware, createUsers )
+router.get('/admin/all-users',  adminMiddleware, getAllUsers )
 
 module.exports = router

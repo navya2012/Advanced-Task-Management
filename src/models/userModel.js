@@ -17,13 +17,16 @@ const usersSchema = mongoose.Schema({
         type:String,
         required:true,
         minlength: 8
+    },
+    organization_id:{
+        type:String
     }
 },
 { timestamp: true }
 )
 
 // // users static signup function
-usersSchema.statics.newUser = async (role, email, password) => {
+usersSchema.statics.newUser = async (role, email, password, organization_id) => {
 
     const exists = await userDetailsModel.findOne({ email })
     if (exists) {
@@ -33,7 +36,7 @@ usersSchema.statics.newUser = async (role, email, password) => {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const newUserDetails = await userDetailsModel.create({role, email, password: hash })
+    const newUserDetails = await userDetailsModel.create({role, email, password: hash , organization_id})
 
     return newUserDetails
 }
